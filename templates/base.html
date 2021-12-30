@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% block css %}{% endblock %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base_style.css' %}">
+    <title>{% block title %}Base Titel{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.jpg' %}">
+</head>
+<body>
+    <header>
+        <a href="{% url 'home' %}"><img id="logo__header" src="{% static 'img/logo.jpg' %}" alt="logo"></a>
+        <div class="nav__links">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'clothing-list' %}">Shop</a></li>
+                <li><a href="#">Brand</a></li>
+                <li><a href="#">Woman</a></li>
+                <li><a href="#">Man</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </div>
+        <a href="#"><img id="cart__header" src="{% static 'img/cart.svg' %}" alt="cart"></a>
+        <div class="nav__bttns">
+            <a href="{% url 'login' %}"><button id="login__bttn">Login</button></a>
+            <a href="#"><button id="register__bttn">Register</button></a>
+        </div>
+    </header>
+    {% block content %}Base Block{% endblock %}
+</body>
+</html>

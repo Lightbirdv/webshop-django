@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home_style.css' %}">
+{% endblock %}
+
+{% block title %}fashvio{% endblock %}
+
+{% block content %}
+    <div class="side__wrapper">
+        <div class="hero__section">
+            <div class="header__container">
+                <h1 id="hero__hdrtxt">Find Your New Favorite Collection At Winter Sale 2022<h1>
+            </div>
+        </div>
+    </div>
+    <div class="content__wrapper">
+        <a href={% url 'clothing-list' %}>Go to Listings</a><br>
+    </div>
+{% endblock %}
+

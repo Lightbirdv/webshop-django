@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Clothing detail{% endblock %}
+
+{% block content %}
+<h2>Clothing detail</h2>
+
+    <table>
+    <tr>
+        <td><b>Name:</b></td>
+        <td>{{ that_clothing.name }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Description:</b></td>
+        <td>{{ that_clothing.description }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Color:</b></td>
+        <td>{{ that_clothing.color }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Collection:</b></td>
+        <td>{{ that_clothing.collection }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Size:</b></td>
+        <td>{{ that_clothing.size }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Type:</b></td>
+        <td>{{ that_clothing.type }}<br></td>
+    </tr>
+    </table>
+
+    <span style="color: darkgreen">{{ upvotes }}</span>
+    <a href="{% url 'clothing-vote' that_clothing.id 'up' %}" style="text-decoration: none">
+        <img src="{% static 'img/like.svg' %}" height="20" width="20">
+    </a>
+    &nbsp;&nbsp;&nbsp;
+    <span style="color: crimson">{{ downvotes }}</span>
+    <a href="{% url 'clothing-vote' that_clothing.id 'down' %}" style="text-decoration: none">
+        <img src="{% static 'img/dislike.svg' %}" height="20" width="20">
+    </a>
+    <br><br>
+
+    {% for comment in comments_for_that_clothing %}
+        <b style="color: darkgreen">{{ comment.user.username }} on {{ comment.timestamp }}</b><br>
+        {{ comment.text }}<br><br>
+    {% endfor %}
+    <br>
+
+    <b>Do you have a comment for this clothing?</b><br>
+    <form method="POST">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Add comment</button>
+    </form>
+
+    <br>
+    <button><a href="{% url 'clothing-delete' that_clothing.id %}">Delete clothing</a></button>
+    <br>
+    <a href="{% url 'clothing-list' %}">Back to all clothings</a>
+{% endblock %}
