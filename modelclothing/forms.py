@@ -10,7 +10,7 @@ class ClothingForm(forms.ModelForm):
         widgets = {
             'size': forms.Select(choices=Clothing.SIZE),
             'type': forms.Select(choices=Clothing.TYPE),
-            'user': forms.HiddenInput(),
+            'myuser': forms.HiddenInput(),
         }
 
 class CommentForm(forms.ModelForm):
@@ -19,6 +19,6 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
         widgets = {
-            'user': forms.HiddenInput(),
+            'myuser': forms.HiddenInput(),
             'clothing': forms.HiddenInput(),
         }

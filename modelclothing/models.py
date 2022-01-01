@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from datetime import date
-from django.contrib.auth.models import User
+from useradmin.models import MyUser
 
 # Create your models here.
 class Clothing(models.Model):
@@ -44,10 +44,10 @@ class Clothing(models.Model):
                             choices=TYPE,
                             )
 
-    user = models.ForeignKey(User,
+    myuser = models.ForeignKey(MyUser,
                               on_delete=models.CASCADE,
-                              related_name='users',
-                              related_query_name='user',
+                              related_name='clothing_created_by',
+                              related_query_name='clothing_created_by',
                               )
 
     # pdffile = models.FileField(upload_to="static files/")
@@ -73,12 +73,12 @@ class Clothing(models.Model):
     def get_downvotes_count(self):
         return len(self.get_downvotes())
 
-    def vote(self, user, up_or_down):
+    def vote(self, myuser, up_or_down):
         U_or_D = 'U'
         if up_or_down == 'down':
             U_or_D = 'D'
         vote = Vote.objects.create(up_or_down=U_or_D,
-                                   user=user,
+                                   myuser=myuser,
                                    clothing=self
                                    )
 
@@ -91,7 +91,7 @@ class Clothing(models.Model):
 class Comment(models.Model):
     text = models.TextField(max_length=500)
     timestamp = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    myuser = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     clothing = models.ForeignKey(Clothing, on_delete=models.CASCADE)
 
     class Meta:
@@ -106,10 +106,10 @@ class Comment(models.Model):
             return self.text
 
     def __str__(self):
-        return self.get_comment_prefix() + ' (' + self.user.username + ')'
+        return self.get_comment_prefix() + ' (' + self.myuser.user.username + ')'
 
     def __repr__(self):
-        return self.get_comment_prefix() + ' (' + self.user.username + ' / ' + str(self.timestamp) + ')'
+        return self.get_comment_prefix() + ' (' + self.myuser.user.username + ' / ' + str(self.timestamp) + ')'
 
 
 class Vote(models.Model):
@@ -122,8 +122,8 @@ class Vote(models.Model):
                                   choices=VOTE_TYPES,
                                  )
     timestamp = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    myuser = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     clothing = models.ForeignKey(Clothing, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.up_or_down + ' on ' + self.clothing.name + ' by ' + self.user.username
+        return self.up_or_down + ' on ' + self.clothing.name + ' by ' + self.myuser.user.username

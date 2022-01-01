@@ -24,7 +24,7 @@
         <a href="#"><img id="cart__header" src="{% static 'img/cart.svg' %}" alt="cart"></a>
         <div class="nav__bttns">
             <a href="{% url 'login' %}"><button id="login__bttn">Login</button></a>
-            <a href="#"><button id="register__bttn">Register</button></a>
+            <a href="{% url 'signup' %}"><button id="register__bttn">Register</button></a>
         </div>
     </header>
     {% block content %}Base Block{% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .forms import ClothingForm, CommentForm
 from .models import Clothing, Comment
+from useradmin.models import get_myuser_from_user
 
 
 def all_clothing_list(request):
@@ -23,12 +24,14 @@ def clothing_detail(request, **kwargs):
     clothing = Clothing.objects.get(id=clothing_id)
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        form.instance.user = request.user
-        form.instance.clothing = clothing
-        if form.is_valid():
-            form.save()
-        else:
-            print(form.errors)
+        myuser = get_myuser_from_user(request.user)
+        if myuser is not None:
+            form.instance.myuser = myuser
+            form.instance.clothing = clothing
+            if form.is_valid():
+                form.save()
+            else:
+                print(form.errors)
 
     comments = Comment.objects.filter(clothing=clothing)
     context = {'that_clothing': clothing,
@@ -42,12 +45,14 @@ def clothing_detail(request, **kwargs):
 def clothing_create(request):
     if request.method == 'POST':
         create_clothing_form = ClothingForm(request.POST)
-        create_clothing_form.instance.user = request.user
-        if create_clothing_form.is_valid():
-            create_clothing_form.save()
-        else:
-            pass
-        return redirect('clothing-list')
+        myuser = get_myuser_from_user(request.user)
+        if myuser is not None:
+            create_clothing_form.instance.user = myuser
+            if create_clothing_form.is_valid():
+                create_clothing_form.save()
+            else:
+                pass
+            return redirect('clothing-list')
 
     else: 
         create_clothing_form = ClothingForm()
@@ -62,6 +67,7 @@ def clothing_delete(request, **kwargs):
 
 def vote(request, pk: str, up_or_down: str):
     clothing = Clothing.objects.get(id=int(pk))
-    user = request.user
-    clothing.vote(user, up_or_down)
+    myuser = get_myuser_from_user(request.user)
+    if myuser is not None:
+        clothing.vote(myuser, up_or_down)
     return redirect('clothing-detail', pk=pk)
