@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'useradmin.apps.UseradminConfig',
-    'modelclothing.apps.ModelclothingConfig'
+    'modelclothing.apps.ModelclothingConfig',
+    'customerservice.apps.CustomerserviceConfig',
+    'cart.apps.CartConfig'
 ]
 
 MIDDLEWARE = [
@@ -137,3 +139,5 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'useradmin.MyUser'

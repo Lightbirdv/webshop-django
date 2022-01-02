@@ -1,6 +1,7 @@
 from datetime import date, datetime
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from cart.models import Cart
 
 def get_date_20_years_ago():
     now = datetime.now()
@@ -9,17 +10,21 @@ def get_date_20_years_ago():
     day = now.day
     return date(year - 20, month, day)
 
-def get_myuser_from_user(user):
-    myuser = None
-    myuser_query_set = MyUser.objects.filter(user=user)
-    if len(myuser_query_set) > 0:
-        myuser = myuser_query_set.first()
-    return myuser
 
+class MyUser(AbstractUser):
 
-class MyUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    USER_TYPES = [
+        ('SU', 'superuser'),
+        ('CS', 'customer service'),
+        ('CU', 'customer'),
+        ('BP', 'business partner'),
+    ]
+
     date_of_birth = models.DateField(default=get_date_20_years_ago())
+    type = models.CharField(max_length=2,
+                            choices=USER_TYPES,
+							default='CU',
+                            )
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
 
     def has_birthday_today(self):
@@ -36,6 +41,16 @@ class MyUser(models.Model):
             return_boolean = True
         return return_boolean
 
+    def count_shopping_cart_items(self):
+        count = 0
+        if self.is_authenticated:
+            shopping_carts = Cart.objects.filter(myuser=self)
+            if shopping_carts:
+                shopping_cart = shopping_carts.first()
+                count = shopping_cart.get_number_of_items()
+
+        return count
+
     def __str__(self):
-        return self.user.first_name + ' ' + self.user.last_name + ' (' + str(self.date_of_birth) + ')'
+        return self.user.first_name + ' ' + self.user.last_name + ' (' + str(self.date_of_birth) + ')' + str(self.user_id)
 

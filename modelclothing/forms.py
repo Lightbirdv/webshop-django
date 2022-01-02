@@ -22,3 +22,10 @@ class CommentForm(forms.ModelForm):
             'myuser': forms.HiddenInput(),
             'clothing': forms.HiddenInput(),
         }
+
+        
+class SearchForm(forms.ModelForm):
+
+    class Meta:
+        model = Clothing
+        fields = ['name']

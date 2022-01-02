@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search clothing{% endblock %}
+
+{% block content %}
+<h2>Search clothing</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    <br>
+    <br>
+
+    {% if show_results %}
+        <b>Clothes found:</b><br>
+        <ul>
+        {% for clothing in findings %}
+            <a href="{% url 'clothing-detail' clothing.id %}"><b>{{ clothing.name }}</b></a><br>
+            {{ clothing.clothing_details }}<br>
+            <br>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

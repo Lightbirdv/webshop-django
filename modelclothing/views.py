@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .forms import ClothingForm, CommentForm
+from .forms import ClothingForm, CommentForm, SearchForm
 from .models import Clothing, Comment
-from useradmin.models import get_myuser_from_user
 
 
 def all_clothing_list(request):
@@ -12,26 +11,17 @@ def all_clothing_list(request):
     return render(request, 'clothing-list.html', context)
 
 
-# def clothing_list_filtered(request, **kwargs):
-#     filter = kwargs['pk']
-#     all_clothes_filtered = Clothing.objects.all().filter(type = filter);
-#     context = {'all_the_clothing': all_clothes_filtered}
-#     return render(request, 'clothing-list.html', context)
-
-
 def clothing_detail(request, **kwargs):
     clothing_id = kwargs['pk']
     clothing = Clothing.objects.get(id=clothing_id)
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        myuser = get_myuser_from_user(request.user)
-        if myuser is not None:
-            form.instance.myuser = myuser
-            form.instance.clothing = clothing
-            if form.is_valid():
-                form.save()
-            else:
-                print(form.errors)
+        form.instance.myuser = request.user
+        form.instance.clothing = clothing
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
 
     comments = Comment.objects.filter(clothing=clothing)
     context = {'that_clothing': clothing,
@@ -45,15 +35,12 @@ def clothing_detail(request, **kwargs):
 def clothing_create(request):
     if request.method == 'POST':
         create_clothing_form = ClothingForm(request.POST)
-        myuser = get_myuser_from_user(request.user)
-        if myuser is not None:
-            create_clothing_form.instance.user = myuser
-            if create_clothing_form.is_valid():
-                create_clothing_form.save()
-            else:
-                pass
-            return redirect('clothing-list')
-
+        create_clothing_form.instance.myuser = request.user
+        if create_clothing_form.is_valid():
+            create_clothing_form.save()
+        else:
+            pass
+        return redirect('clothing-list')
     else: 
         create_clothing_form = ClothingForm()
         context = {'form': create_clothing_form}
@@ -65,9 +52,27 @@ def clothing_delete(request, **kwargs):
     Clothing.objects.filter(id=clothing_id).delete()
     return redirect('clothing-list')
 
+
+def clothing_search(request):
+    if request.method == 'POST':
+        search_string = request.POST['name']
+        findings = Clothing.objects.filter(name__contains=search_string)
+
+        form_in_function_based_view = SearchForm()
+        context = {'form': form_in_function_based_view,
+                   'findings': findings,
+                   'show_results': True}
+        return render(request, 'clothing-search.html', context)
+
+    else:
+        form_in_function_based_view = SearchForm()
+        context = {'form': form_in_function_based_view,
+                   'show_results': False}
+        return render(request, 'clothing-search.html', context)
+
+
 def vote(request, pk: str, up_or_down: str):
     clothing = Clothing.objects.get(id=int(pk))
-    myuser = get_myuser_from_user(request.user)
-    if myuser is not None:
-        clothing.vote(myuser, up_or_down)
+    myuser = request.user
+    clothing.vote(myuser, up_or_down)
     return redirect('clothing-detail', pk=pk)

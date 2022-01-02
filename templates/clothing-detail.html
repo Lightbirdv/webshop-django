@@ -33,6 +33,17 @@
     </tr>
     </table>
 
+    {% if user.is_authenticated %}
+        <br>
+        <form action="{% url 'shopping-cart-add' that_clothing.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Add to shopping cart</button>
+        </form>
+    {% else %}
+        <br><a href="{% url 'login' %}">Login</a> to add to shopping cart
+        <br>
+    {%  endif %}
+
     <span style="color: darkgreen">{{ upvotes }}</span>
     <a href="{% url 'clothing-vote' that_clothing.id 'up' %}" style="text-decoration: none">
         <img src="{% static 'img/like.svg' %}" height="20" width="20">
