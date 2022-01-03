@@ -33,6 +33,12 @@ class Clothing(models.Model):
         ('Suits', 'suits'),
     ]
 
+    SEX = [
+        ('Male','male'),
+        ('Female','female'),
+        ('Unisex', 'unisex'),
+    ]
+
     name = models.CharField(max_length=100)
     price = models.DecimalField(decimal_places=2, max_digits=10, default=20.0)
     description = models.CharField(max_length=100)
@@ -51,6 +57,10 @@ class Clothing(models.Model):
                               related_name='clothing_created_by',
                               related_query_name='clothing_created_by',
                               )
+    sex = models.CharField(max_length=6,
+                            choices=SEX,
+                            default='unisex'
+                            )
 
     # pdffile = models.FileField(upload_to="static files/")
 
@@ -98,6 +108,7 @@ class Comment(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     myuser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     clothing = models.ForeignKey(Clothing, on_delete=models.CASCADE)
+    reported = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['timestamp']

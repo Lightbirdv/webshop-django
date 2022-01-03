@@ -6,10 +6,11 @@ class ClothingForm(forms.ModelForm):
 
     class Meta:
         model = Clothing
-        fields = ['name', 'description', 'color', 'collection', 'size', 'type']
+        fields = ['name', 'description', 'color', 'collection', 'size', 'type', 'sex']
         widgets = {
             'size': forms.Select(choices=Clothing.SIZE),
             'type': forms.Select(choices=Clothing.TYPE),
+            'sex': forms.Select(choices=Clothing.SEX),
             'myuser': forms.HiddenInput(),
         }
 

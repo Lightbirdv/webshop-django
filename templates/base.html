@@ -29,7 +29,7 @@
             {% endif %}
             )</a>
         {% if user.is_authenticated %}
-            <a href="{% url 'home' %}"><img id="nav__profilepic" src="{% static 'img/profile-default.svg' %}" alt="profile"></img></a>
+            <a href="{% url 'profile' %}"><img id="nav__profilepic" src="{% static 'img/profile-default.svg' %}" alt="profile"></img></a>
             <div class="nav__bttns">
                 <a href="{% url 'logout' %}"><button class="login__bttn">Logout</button></a>
             </div>
@@ -40,6 +40,13 @@
             </div>
         {% endif %}
     </header>
-    {% block content %}Base Block{% endblock %}
+    {% block hero %}{% endblock %}
+    <div class="page__wrapper">
+        {% block content %}#
+            Base Block
+        {% endblock %}
+    </div>
+    {% block footer %}{% endblock %}
+
 </body>
 </html>

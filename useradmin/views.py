@@ -36,3 +36,8 @@ class MyUserListView(generic.ListView):
 def logout_view(request):
     auth_logout(request)
     return render(request, 'logout.html')
+
+def profile_view(request):
+    user = MyUser.objects.get(id=request.user.id)
+    context = {'that_user': user}
+    return render(request, 'profile.html', context)

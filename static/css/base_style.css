@@ -18,7 +18,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 10%;
+    padding: 20px 5.5%;
 }
 
 .nav__links ul{
@@ -67,4 +67,9 @@ button {
 #nav__profilepic {
     width: 20px;
     height: 20px;
+}
+
+.page__wrapper{
+    margin-left: 85px;
+    margin-right: 85px;
 }

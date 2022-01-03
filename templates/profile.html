@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>My Profile</h2>
+
+    <table>
+    <tr>
+        <td><img src="{{that_user.profile_picture.url}}"><br></td>
+    </tr>
+    <tr>
+        <td><b>Username:</b></td>
+        <td>{{ that_user.username }}<br></td>
+    </tr>
+    <tr>
+        <td><b>First Name:</b></td>
+        <td>{{ that_user.first_name }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Last Name:</b></td>
+        <td>{{ that_user.last_name }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Email:</b></td>
+        <td>{{ that_user.email }}<br></td>
+    </tr>
+    <tr>
+        <td><b>Date joined:</b></td>
+        <td>{{ that_user.date_joined }}<br></td>
+    </tr>
+    </table>
+
+{% endblock %}

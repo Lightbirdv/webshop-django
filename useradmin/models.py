@@ -2,6 +2,7 @@ from datetime import date, datetime
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from cart.models import Cart
+from django.templatetags.static import static
 
 def get_date_20_years_ago():
     now = datetime.now()
@@ -25,7 +26,8 @@ class MyUser(AbstractUser):
                             choices=USER_TYPES,
 							default='CU',
                             )
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', default= 'profile_pictures/profile-default.svg')
+
 
     def has_birthday_today(self):
         return_boolean = False
@@ -41,6 +43,7 @@ class MyUser(AbstractUser):
             return_boolean = True
         return return_boolean
 
+
     def count_shopping_cart_items(self):
         count = 0
         if self.is_authenticated:
@@ -51,6 +54,14 @@ class MyUser(AbstractUser):
 
         return count
 
+    
+    def is_superuser_or_customer_service(self):
+        if self.type == 'SU' or self.type == 'CS':
+            return True
+        else:
+            return False
+
+
     def __str__(self):
-        return self.user.first_name + ' ' + self.user.last_name + ' (' + str(self.date_of_birth) + ')' + str(self.user_id)
+        return "usr: " + self.username + ", email: " +  self.email + ", type: " + self.type
 

@@ -4,12 +4,13 @@
     padding: 0; 
 }
 
-@font-face { font-family: Poppins; src: url("{% static 'font/poppins-regular-webfont.woff' %}") format("woff"); }
-@font-face { font-family: Poppins; src: url("{% static 'font/poppins-medium-webfont.woff' %}") format("woff"); font-weight: 500; }
-@font-face { font-family: Poppins; src: url("{% static 'font/poppins-bold-webfont.woff' %}") format("woff"); font-weight: 600; }
+@font-face { font-family: Poppins; src: url('../font/poppins-regular-webfont.woff') format("woff"); }
+@font-face { font-family: Poppins-medium; src: url('../font/poppins-medium-webfont.woff') format("woff"); font-weight: 500; }
+@font-face { font-family: Poppins-bold; src: url('../font/poppins-bold-webfont.woff') format("woff"); font-weight: 600; }
 
-h1 h2 h3 p a {
+h1, h2, h3, p, a {
     font-family: Poppins;
+    color: #464443;
 } 
 
 .side__wrapper {
@@ -19,21 +20,103 @@ h1 h2 h3 p a {
 
 .hero__section {
     width: 100%;
-    height: 100vh;
+    height: 85vh;
     background: url('../img/brown-eyed-woman-red-sweater-white-hat-opens-gift-boxes.jpg') no-repeat center / cover;
-    color: white;
+    z-index: -1;
 }
 
 #hero__hdrtxt {
     padding-top: 10%;
-    padding-left: 10%;
+    padding-left: 5.5%;
     width: 800px;
     font-family: Poppins;
-    font-size: 3.75em;
+    font-size: 3.5vw;
+    color: white;
 }
 
 .content__wrapper {
     margin: 0 auto;
     padding-left: 84px;
     padding-right: 84px;
+}
+
+.trending__card {
+    margin-top: -150px;
+    height: 20vw;
+    box-shadow: 10px 5px 8px 8px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    background-color: #ffffff;
+}
+
+#trending__heading {
+    margin-left: 40px;
+    padding-top: 20px;
+}
+
+.trending__item{
+    float: left;
+    height:150px;
+    width: 50%;
+    padding-left: 40px;
+}
+
+.company__section {
+    margin: auto;
+    width: 50%;
+    margin-top: 100px;
+}
+
+.column {
+    float: left;
+    height:150px;
+    width: 20%;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.sex__selection {
+    margin: auto;
+}
+
+.sex__card:first-of-type{
+    background: url('../img/womans-clothing.jpg') no-repeat center / cover;
+}
+
+.sex__card:nth-of-type(2){
+    background: url('../img/mans-clothing.jpg') no-repeat center / cover;
+}
+
+.sex__card {
+    border: 10px solid white;
+    float: left;
+    width:50%;
+    height: 50vw;
+    padding-top: 40vw;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.sex__card h2,.sex__card p,.sex__card a{
+    color: white!important;
+}
+
+.cta__section {
+    margin-top: 10vw;
+    text-align: center;
+    margin-bottom: 10vw;
+}
+
+.cta__section button {
+    margin-top: 3vw;
+    color: white;
+    background-color: #464443;
+    border-radius: 0;
+    width: 120px;
+}
+
+.footer__section {
+    height: 25vw;
+    background-color: #464443;
 }
