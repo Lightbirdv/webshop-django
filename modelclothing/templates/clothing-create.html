@@ -9,14 +9,7 @@
             <h2>Add Clothing</h2>
             <form method="POST">
                 {% csrf_token %}   
-            
-                {{ form.name.label }}: {{ form.name }}<br><br>
-                {{ form.description.label }}: {{ form.description }}<br><br>
-                {{ form.color.label }}: {{ form.color }}<br><br>
-                {{ form.collection.label }}: {{ form.collection }}<br><br>
-                {{ form.size.label }}: {{ form.size }}<br><br>
-                {{ form.type.label }}: {{ form.type }}<br><br>
-
+                {{ form.as_p }}
                 <button type="submit">Add Clothing</button>
             </form>
         {% endblock %}

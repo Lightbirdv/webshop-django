@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Reported Comments list{% endblock %}
+
+{% block content %}
+<div class="list-container">
+    <h2>Reported Comments list</h2>
+    <ul>
+        {% for comment in comment_list %}
+            <div class="list-item">
+                <b style="color: darkgreen">{{ comment.myuser.username }} on {{ comment.timestamp }}</b><br>
+                {{ comment.text }}<br>
+                <form action="{% url 'comments-reported-delete' comment.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">delete comment</button>
+                </form>
+            </div>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

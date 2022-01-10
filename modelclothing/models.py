@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime
 # Create your models here.
 from django.db import models
 from datetime import date
@@ -44,6 +44,8 @@ class Clothing(models.Model):
     description = models.CharField(max_length=100)
     color = models.CharField(max_length=50)
     collection = models.CharField(max_length=50)
+    timestamp = models.DateTimeField(default=datetime.now, blank=True)
+    product_picture = models.ImageField(upload_to='product_pictures/', default= 'product_pictures/product-default.jpg')
     size = models.CharField(max_length=3,
                             choices=SIZE,
                             )
@@ -62,58 +64,47 @@ class Clothing(models.Model):
                             default='unisex'
                             )
 
-    # pdffile = models.FileField(upload_to="static files/")
+    pdffile = models.FileField(upload_to='pdf_files', default= 'pdf_files/pdf-default.pdf')
 
     class Meta: 
         ordering = ['name', '-type']
         verbose_name = 'Clothing'
         verbose_name_plural = 'Clothes'
 
-    def get_upvotes(self):
-        upvotes = Vote.objects.filter(up_or_down='U',
-                                      clothing=self)
-        return upvotes
+    def get_rating(self):
+        clothing_votes = Comment.objects.filter(clothing_id = self.id)
+        rating = 0
+        for vote in clothing_votes:
+            rating += vote.rating / len(clothing_votes)
+        rating = round(rating,1)
+        return rating
 
-    def get_upvotes_count(self):
-        return len(self.get_upvotes())
-
-    def get_downvotes(self):
-        downvotes = Vote.objects.filter(up_or_down='D',
-                                        clothing=self)
-        return downvotes
-
-    def get_downvotes_count(self):
-        return len(self.get_downvotes())
-
-    def vote(self, myuser, up_or_down):
-        U_or_D = 'U'
-        if up_or_down == 'down':
-            U_or_D = 'D'
-        vote = Vote.objects.create(up_or_down=U_or_D,
-                                   myuser=myuser,
-                                   clothing=self
-                                   )
 
     def __str__(self):
         return self.name + ' (' + self.collection + ')'
 
+
     def __repr__(self):
         return self.name + ' / ' + self.description + ' / ' + self.color + ' / ' + self.collection + ' / ' + self.size + ' / ' + self.type
+
 
     def clothing_details(self):
         return self.name + ' / ' + self.description + ' / ' + self.color + ' / ' + self.collection + ' / ' + self.size + ' / ' + self.type
 
 class Comment(models.Model):
-    text = models.TextField(max_length=500)
+    text = models.TextField(max_length=500, blank=True)
+    rating = models.IntegerField(default=5)
     timestamp = models.DateTimeField(auto_now_add=True)
     myuser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     clothing = models.ForeignKey(Clothing, on_delete=models.CASCADE)
     reported = models.BooleanField(default=False)
 
+
     class Meta:
         ordering = ['timestamp']
         verbose_name = 'Comment'
         verbose_name_plural = 'Comments'
+
 
     def get_comment_prefix(self):
         if len(self.text) > 50:
@@ -121,25 +112,17 @@ class Comment(models.Model):
         else:
             return self.text
 
+
     def __str__(self):
         return self.get_comment_prefix() + ' (' + self.myuser.username + ')'
+
 
     def __repr__(self):
         return self.get_comment_prefix() + ' (' + self.myuser.username + ' / ' + str(self.timestamp) + ')'
 
 
-class Vote(models.Model):
-    VOTE_TYPES = [
-        ('U', 'up'),
-        ('D', 'down'),
-    ]
-
-    up_or_down = models.CharField(max_length=1,
-                                  choices=VOTE_TYPES,
-                                 )
-    timestamp = models.DateTimeField(auto_now_add=True)
-    myuser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    clothing = models.ForeignKey(Clothing, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.up_or_down + ' on ' + self.clothing.name + ' by ' + self.myuser.username
+    def is_reported(self):
+        if self.reported == True:
+            return True
+        else:
+            return False

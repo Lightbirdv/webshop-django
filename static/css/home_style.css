@@ -54,10 +54,20 @@ h1, h2, h3, p, a {
 }
 
 .trending__item{
-    float: left;
     height:150px;
     width: 50%;
     padding-left: 40px;
+    float:left;
+}
+
+.trending__txt {
+    width: 70%;
+    float: right;
+    padding: 10px; 
+}
+
+.trending__txt p {
+    padding-top: 10px;
 }
 
 .company__section {
@@ -117,6 +127,17 @@ h1, h2, h3, p, a {
 }
 
 .footer__section {
+    font-family: Poppins;
+    color: white;
     height: 25vw;
     background-color: #464443;
+}
+
+.footer__content {
+    padding: 30px;
+}
+
+.footer__content table {
+    text-align: left;
+    border-spacing: 50px 15px;
 }

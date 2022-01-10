@@ -19,16 +19,20 @@
     <div class='trending__card'>
         <h1 id='trending__heading'>Trending Clothes</h1>
         <div class='trending__item'>
-            <img src="{% static 'img/trending_placeholder.svg' %}" style="width:10%">
-            <h2>Title</h2>
-            <p>orem ipsum dolor sit amet, adipiscing elit. Nunc dolor nulla</p>
-            <p>15,99 €</p>
+            <img src="{% static 'img/trending_placeholder.svg' %}" style="width:30%; float:left;">
+            <div class='trending__txt'>
+                <h2>Title</h2>
+                <p>orem ipsum dolor sit amet, adipiscing elit. Nunc dolor nulla</p>
+                <p>15,99 €</p>
+            </div>
         </div>
         <div class='trending__item'>
-            <img src="{% static 'img/trending_placeholder.svg' %}"style="width:10%">
-            <h2>Title</h2>
-            <p>orem ipsum dolor sit amet, adipiscing elit. Nunc dolor nulla</p>
-            <p>15,99 €</p>
+            <img src="{% static 'img/trending_placeholder.svg' %}"style="width:30%; float:left;">
+            <div class='trending__txt'>
+                <h2>Title</h2>
+                <p>orem ipsum dolor sit amet, adipiscing elit. Nunc dolor nulla</p>
+                <p>15,99 €</p>
+            </div>
         </div>
     </div>
     <div class='company__section'>
@@ -67,13 +71,45 @@
     <div class="cta__section">
         <h1>You want more?<br>
             Join Our Newsletter Today!</h1>
-        <button>Join now</button>
+        <a href="{% url 'signup' %}">
+            <button>Join now</button>
+        </a>
     </div>
 {% endblock %}
 
 {% block footer %}
     <div class='footer__section'>
-        
+        <div class='footer__content'>
+            <img src="{% static 'img/trending_placeholder.svg' %}" style="width:20%; height:20%; float:left;">
+            <table>
+                <tr>
+                <th>Adress</th>
+                <th>Shop</th>
+                <th>Help</th>
+                <th>Sign up now!</th>
+                </tr>
+                <tr>
+                <td rowspan = "4">Lorem Ipsum</td>
+                <td>New In</td>
+                <td>My Account</td>
+                <td rowspan = "4">Become a member now
+                    and get exclusive offers 
+                    only for you. </td>
+                </tr>
+                <tr>
+                    <td>Brand</td>
+                    <td>Contact Us</td>
+                </tr>
+                <tr>
+                    <td>Woman</td>
+                    <td>Terms of Use</td>
+                </tr>
+                <tr>
+                    <td>Man</td>
+                    <td>Privacy and Cookies Policy</td>
+                </tr>
+            </table>
+        </div>
     </div>
 {% endblock %}
 
