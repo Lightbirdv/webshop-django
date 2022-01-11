@@ -26,7 +26,6 @@ class MyLoginView(LoginView):
         auth_login(self.request, form.get_user())
         return HttpResponseRedirect(self.get_success_url())
 
-
 class MyUserListView(generic.ListView):
     model = MyUser
     context_object_name = 'all_myusers'

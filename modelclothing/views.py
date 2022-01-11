@@ -4,13 +4,17 @@ from .forms import ClothingForm, CommentForm, SearchForm
 from .models import Clothing, Comment
 
 
-
 def all_clothing_list(request):
     all_clothes = Clothing.objects.all()
     context = {'all_the_clothes': all_clothes}
     print(context)
     return render(request, 'clothing-list.html', context)
 
+def filtered_clothing_list(request, filter):
+    filtered_clothes = Clothing.objects.filter(type=filter)
+    print(filtered_clothes)
+    context = {'all_the_clothes': filtered_clothes}
+    return render(request, 'clothing-list.html', context)
 
 def clothing_detail(request, **kwargs):
     clothing_id = kwargs['pk']
@@ -62,7 +66,7 @@ def comment_create(request, **kwargs):
     print('clothing_id: ' + str(clothing_id))
     print('text: ' + str(text))
     print('rating: ' + str(rating))
-    form = CommentForm()
+    form = CommentForm(request.POST)
     form.instance.text = text
     form.instance.rating = int(rating)
     form.instance.myuser = request.user

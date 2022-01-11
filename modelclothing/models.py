@@ -77,7 +77,7 @@ class Clothing(models.Model):
         for vote in clothing_votes:
             rating += vote.rating / len(clothing_votes)
         rating = round(rating,1)
-        return rating
+        return str(rating)
 
 
     def __str__(self):
@@ -93,7 +93,7 @@ class Clothing(models.Model):
 
 class Comment(models.Model):
     text = models.TextField(max_length=500, blank=True)
-    rating = models.IntegerField(default=5)
+    rating = models.IntegerField(default='5')
     timestamp = models.DateTimeField(auto_now_add=True)
     myuser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     clothing = models.ForeignKey(Clothing, on_delete=models.CASCADE)
