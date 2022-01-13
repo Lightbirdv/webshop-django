@@ -8,88 +8,93 @@
 {% block title %}{{ that_clothing.name }}{% endblock %}
 
 {% block content %}
-<h2>{{ that_clothing.name }}</h2>
+<div class="content__wrapper">
+    <h2>{{ that_clothing.name }}</h2>
+    <img src="{{ that_clothing.product_picture.url }}" id="product__img" style="width:300px;height:420px; float:left;"><br>
+        <table>
+        <tr>
+            <td><b>{{ that_clothing.price }}€</b></td>  
+        </tr>
+        <tr>
+            <td><b>Description:</b></td>
+            <td>{{ that_clothing.description }}<br></td>
+        </tr>
+        <tr>
+            <td><b>Color:</b></td>
+            <td>{{ that_clothing.color }}<br></td>
+        </tr>
+        <tr>
+            <td><b>Collection:</b></td>
+            <td>{{ that_clothing.collection }}<br></td>
+        </tr>
+        <tr>
+            <td><b>Size:</b></td>
+            <td>{{ that_clothing.size }}<br></td>
+        </tr>
+        <tr>
+            <td><b>Type:</b></td>
+            <td>{{ that_clothing.type }}<br></td>
+        </tr>
+        <tr>
+            <td><b>Rating:</b></td>
+            <td>★{{ that_clothing.get_rating }}<br></td>
+        </tr>
+        </table>
 
-    <table>
-    <tr>
-        <td><img src="{{ that_clothing.product_picture }}"><br></td>
-    </tr>
-    <tr>
-        <td><b>Description:</b></td>
-        <td>{{ that_clothing.description }}<br></td>
-    </tr>
-    <tr>
-        <td><b>Color:</b></td>
-        <td>{{ that_clothing.color }}<br></td>
-    </tr>
-    <tr>
-        <td><b>Collection:</b></td>
-        <td>{{ that_clothing.collection }}<br></td>
-    </tr>
-    <tr>
-        <td><b>Size:</b></td>
-        <td>{{ that_clothing.size }}<br></td>
-    </tr>
-    <tr>
-        <td><b>Type:</b></td>
-        <td>{{ that_clothing.type }}<br></td>
-    </tr>
-    <tr>
-        <td><b>Rating:</b></td>
-        <td>★{{ that_clothing.get_rating }}<br></td>
-    </tr>
-    </table>
-
-    {% if user.is_authenticated %}
-        <br>
-        <form action="{% url 'shopping-cart-add' that_clothing.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Add to shopping cart</button>
-        </form>
-    {% else %}
-        <br><a href="{% url 'login' %}">Login</a> to add to shopping cart
-        <br>
-    {%  endif %}
-
-    <br><br>
-
-    <b>Do you have a comment for this clothing?</b><br>
-    <form method="POST" action="{% url 'comment-create' that_clothing.id %}">
-        {% csrf_token %}
-        <div class="rating">
-            <input id="star5" name="rating" type="radio" value="5" class="radio-btn hide" />
-            <label for="star5">☆</label>
-            <input id="star4" name="rating" type="radio" value="4" class="radio-btn hide" />
-            <label for="star4">☆</label>
-            <input id="star3" name="rating" type="radio" value="3" class="radio-btn hide" />
-            <label for="star3">☆</label>
-            <input id="star2" name="rating" type="radio" value="2" class="radio-btn hide" />
-            <label for="star2">☆</label>
-            <input id="star1" name="rating" type="radio" value="1" class="radio-btn hide" />
-            <label for="star1">☆</label>
-            <div class="clear"></div>
+        <div class="cta__cart">
+            {% if user.is_authenticated %}
+                <br>
+                <form action="{% url 'shopping-cart-add' that_clothing.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Add to cart</button>
+                </form>
+            {% else %}
+                <br><a href="{% url 'login' %}">Login</a> to add to shopping cart
+                <br>
+            {%  endif %}
         </div>
-        <textarea id="text" name="text" rows="4" cols="50"></textarea>
-        {{ form.errors }}
-        {{ form.non_field_errors }}
-        <button type="submit">Add comment</button>
-    </form>
 
-    {% for comment in comments_for_that_clothing %}
-        <b style="color: darkgreen">{{ comment.myuser.username }} on {{ comment.timestamp }}</b><br>
-        {{ comment.text }}<br>
-        {% if comment.is_reported %}
-        <p>This comment has been reported</p>
-        {% else %}
-        <a href="{% url 'comment-report' comment.id %}">Report this comment</a><br>
+        <div class="clear"></div>
+
+        <b>Do you have a comment for this clothing?</b><br>
+        <form method="POST" action="{% url 'comment-create' that_clothing.id %}">
+            {% csrf_token %}
+            <div class="rating">
+                <input id="star5" name="rating" type="radio" value="5" class="radio-btn hide" />
+                <label for="star5">☆</label>
+                <input id="star4" name="rating" type="radio" value="4" class="radio-btn hide" />
+                <label for="star4">☆</label>
+                <input id="star3" name="rating" type="radio" value="3" class="radio-btn hide" />
+                <label for="star3">☆</label>
+                <input id="star2" name="rating" type="radio" value="2" class="radio-btn hide" />
+                <label for="star2">☆</label>
+                <input id="star1" name="rating" type="radio" value="1" class="radio-btn hide" />
+                <label for="star1">☆</label>
+                <div class="clear"></div>
+            </div>
+            <textarea id="text" name="text" rows="4" cols="50"></textarea>
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+            <br>
+            <button type="submit" id="comment__btn">Add comment</button>
+        </form>
+
+        {% for comment in comments_for_that_clothing %}
+            <b style="color: darkgreen">{{ comment.myuser.username }} on {{ comment.timestamp }} {{ comment.rating }}☆</b><br>
+            <p>{{ comment.text }}</p>
+            {% if comment.is_reported %}
+            <p id="reported__link">This comment has been reported</p><br>
+            {% else %}
+            <a href="{% url 'comment-report' comment.id %}" id="report__link">Report this comment</a><br><br>
+            {% endif %}
+        {% endfor %}
+        <br>
+
+        {% if user.is_superuser_or_customer_service %}
+            <button><a href="{% url 'clothing-update' that_clothing.id %}">Update</a></button>
+            <button><a href="{% url 'clothing-delete' that_clothing.id %}">Delete</a></button>
         {% endif %}
-    {% endfor %}
-    <br>
-
-
-    <button><a href="{% url 'clothing-update' that_clothing.id %}">Update clothing</a></button>
-    <br>
-    <button><a href="{% url 'clothing-delete' that_clothing.id %}">Delete clothing</a></button>
-    <br>
-    <a href="{% url 'clothing-list' %}">Back to all clothings</a>
+        <br>
+        <a href="{% url 'clothing-list' %}">Back to all clothings</a>
+    </div>
 {% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/list_style.css' %}">
+{% endblock %}
+
+{% block title %}Clothes list{% endblock %}
+
+{% block sidenav %}
+    <div class="sidenav">
+        <a href="{% url 'clothing-list-men' %}">All</a>
+        <a href="{% url 'clothing-filter-men' 'Jackets' %}">Jackets</a>
+        <a href="{% url 'clothing-filter-men' 'T-Shirts' %}">T-Shirts</a>
+        <a href="{% url 'clothing-filter-men' 'Shirts' %}">Shirts</a>
+        <a href="{% url 'clothing-filter-men' 'Pants' %}">Pants</a>
+        <a href="{% url 'clothing-filter-men' 'Jeans' %}">Jeans</a>
+        <a href="{% url 'clothing-filter-men' 'Pullovers' %}">Pullovers</a>
+        <a href="{% url 'clothing-filter-men' 'Shoes' %}">Shoes</a>
+        <a href="{% url 'clothing-filter-men' 'Basics' %}">Basics</a>
+        <a href="{% url 'clothing-filter-men' 'Accessoires' %}">Accessoires</a>
+        <a href="{% url 'clothing-filter-men' 'Underwear' %}">Underwear</a>
+        <a href="{% url 'clothing-filter-men' 'Suits' %}">Suits</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="list-container">
+    <h2>Clothes list for men</h2>
+    <ul>
+        {% if all_the_clothes %}
+            {% for clothing in all_the_clothes %}
+                <div class="list-item">
+                    {% if clothing.product_picture %}
+                        <img src="{{ clothing.product_picture.url }}" style="width:200px; height:300px;">
+                    {% else %}
+                        <img src="{% static 'img/product-default.jpg' %}" style="width:200px; height:300px;">
+                    {% endif %}
+                    <a href="{% url 'clothing-detail' clothing.id %}" class="clothing-title"><b>{{ clothing.name }}</b></a>
+                    <br><p>{{ clothing.price }}€</p>
+                </div>
+            {% endfor %}
+            {% else %}
+                <p>Oops! Looks like this category is empty</p>
+        {% endif %}
+    </ul>
+    <div class="clear"></div>
+    <a href={% url 'clothing-create' %}>Add a new Clothing</a><br>
+</div>
+{% endblock %}

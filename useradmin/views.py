@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic.base import TemplateView
-from .forms import MySignUpForm
+from .forms import MySignUpForm, MyLoginForm
 from .models import MyUser
 
 
@@ -20,8 +20,8 @@ class MySignUpView(generic.CreateView):
     
 
 class MyLoginView(LoginView):
-    template_name = 'registration/login.html'
-
+    form_class = MyLoginForm
+    template_name = 'login.html'
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
         return HttpResponseRedirect(self.get_success_url())

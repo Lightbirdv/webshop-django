@@ -26,7 +26,7 @@ class MyUser(AbstractUser):
                             choices=USER_TYPES,
 							default='CU',
                             )
-    profile_picture = models.ImageField(upload_to='profile_pictures/', default= 'profile_pictures/profile-default.svg')
+    profile_picture = models.FileField(upload_to='profile_pictures/', default= 'profile_pictures/profile-default.svg')
 
 
     def has_birthday_today(self):

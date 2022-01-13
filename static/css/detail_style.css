@@ -1,8 +1,39 @@
+.content__wrapper  {
+    margin-left: 85px;
+}
+
+b, p {
+    font-family: Poppins;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+table {
+    font-family: Poppins;
+    margin-left: 40%;
+}
+
+.cta__cart {
+    margin-left: 41%;
+}
+
+td {
+    padding: 10px;
+}
+
+#product__img {
+    object-fit: cover;
+    margin-bottom: 50px;
+}
+
 .hide {
     display: none;
 }
 .rating {
-    width: 90px;
+    margin-top: 20px;
+    width: 140px;
     unicode-bidi: bidi-override;
     direction: rtl;
     text-align: center;
@@ -10,10 +41,12 @@
 }
 
 .rating > label {
+    font-size: 25px;
     float: right;
     display: inline;
     padding: 0;
     margin: 0;
+    margin-bottom: 10px;
     position: relative;
     width: 1.1em;
     cursor: pointer;
@@ -34,4 +67,28 @@
     position: absolute;
     left: 0;
     color: #FFD700;
+}
+
+#text {
+    margin-bottom: 10px;
+}
+
+#comment__btn {
+    width: 180px;
+    margin-bottom: 20px;
+}
+
+#reported__link {
+    color:#c7c3c0;
+    font-size: 12px;
+}
+
+#report__link {
+    color:#c7c3c0;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.clear {
+    clear:left;
 }

@@ -45,7 +45,7 @@ class Clothing(models.Model):
     color = models.CharField(max_length=50)
     collection = models.CharField(max_length=50)
     timestamp = models.DateTimeField(default=datetime.now, blank=True)
-    product_picture = models.ImageField(upload_to='product_pictures/', default= 'product_pictures/product-default.jpg')
+    product_picture = models.ImageField(upload_to='product_pictures/', blank=True)
     size = models.CharField(max_length=3,
                             choices=SIZE,
                             )

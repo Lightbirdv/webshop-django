@@ -10,8 +10,34 @@ def all_clothing_list(request):
     print(context)
     return render(request, 'clothing-list.html', context)
 
+def clothing_list_men(request):
+    all_clothes = Clothing.objects.filter(sex='Male')
+    context = {'all_the_clothes': all_clothes}
+    print(context)
+    return render(request, 'clothing-list-man.html', context)
+
+def clothing_list_women(request):
+    all_clothes = Clothing.objects.filter(sex='Female')
+    context = {'all_the_clothes': all_clothes}
+    print(context)
+    return render(request, 'clothing-list-woman.html', context)
+
 def filtered_clothing_list(request, filter):
     filtered_clothes = Clothing.objects.filter(type=filter)
+    print(filtered_clothes)
+    context = {'all_the_clothes': filtered_clothes}
+    return render(request, 'clothing-list.html', context)
+
+def filtered_clothing_list_men(request, filter):
+    all_clothes = Clothing.objects.filter(sex='Male')
+    filtered_clothes = all_clothes.filter(type=filter)
+    print(filtered_clothes)
+    context = {'all_the_clothes': filtered_clothes}
+    return render(request, 'clothing-list.html', context)
+
+def filtered_clothing_list_women(request, filter):
+    all_clothes = Clothing.objects.filter(sex='Female')
+    filtered_clothes = all_clothes.filter(type=filter)
     print(filtered_clothes)
     context = {'all_the_clothes': filtered_clothes}
     return render(request, 'clothing-list.html', context)

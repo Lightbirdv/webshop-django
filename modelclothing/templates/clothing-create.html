@@ -1,17 +1,46 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/create_style.css' %}">
+{% endblock %}
+
 {% block title %}Add Clothing{% endblock %}
 
 {% block content %}
     {% if user.is_authenticated %}
         {% block logged_in_content %}
-            <h2>Add Clothing</h2>
-            <form method="POST">
-                {% csrf_token %}   
-                {{ form.as_p }}
-                <button type="submit">Add Clothing</button>
-            </form>
+            <div class="form__wrapper">
+                <h2>Add Clothing</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}  
+                    <label for="{{ form.name.auto_id }}" class="label__input">{{ form.name.label }}</label><br>
+                        {{ form.name }}<br>
+                    <label for="{{ form.description.auto_id }}" class="label__input">{{ form.description.label }}</label><br>
+                        {{ form.description }}<br>
+                    <label for="{{ form.color.auto_id }}" class="label__input">{{ form.color.label }}</label><br>
+                        {{ form.color }}<br>
+                    <label for="{{ form.collection.auto_id }}" class="label__input">{{ form.collection.label }}</label><br>
+                        {{ form.collection }}<br>
+                    <label for="{{ form.size.auto_id }}" class="label__input">{{ form.size.label }}</label><br>
+                        {{ form.size }}<br>
+                    <label for="{{ form.type.auto_id }}" class="label__input">{{ form.type.label }}</label><br>
+                        {{ form.type }}<br>
+                    <label for="{{ form.sex.auto_id }}" class="label__input">{{ form.sex.label }}</label><br>
+                        {{ form.sex }}<br>
+                    <label for="{{ form.pdffile.auto_id }}" class="label__input">{{ form.pdffile.label }}</label><br>
+                    <div class="file__input">
+                        {{ form.pdffile }}<br>
+                    </div>
+                    <label for="{{ form.product_picture.auto_id }}" class="label__input">{{ form.product_picture.label }}</label><br>
+                    <div class="file__input">
+                        {{ form.product_picture }}<br>
+                    </div>
+                    <label for="{{ form.price.auto_id }}" class="label__input">{{ form.price.label }}</label><br>
+                        {{ form.price }}<br>
+                    <button id="add__clothing" type="submit">Add Clothing</button>
+                </form>
+            </div>
         {% endblock %}
     {% else %}
         {% block not_logged_in_content %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup_style.css' %}">
+{% endblock %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="signup__background"></div>
+    <div class="form__wrapper">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="{{ form.username.auto_id }}" class="label__input">{{ form.username.label }}</label><br>
+                {{ form.username }}<br>
+            <label for="{{ form.password.auto_id }}" class="label__input">{{ form.password.label }}</label><br>
+                {{ form.password }}<br>
+            <button type="submit" id="signup__btn">Login</button>
+        </form>
+    </div>
+{% endblock %}

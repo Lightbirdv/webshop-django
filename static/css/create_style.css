@@ -1,0 +1,38 @@
+text{
+    font-size: 40px;
+}
+
+.form__wrapper {
+    margin-left: 85px;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+.label__input {
+    font-family: Poppins;
+}
+
+.choice__input, .txt__input {
+    width: 300px;
+    height: 30px;
+    color: #434346;
+    border: 1px solid;
+    border-color: #afa8a5;
+    padding-left: 5px;
+    margin-bottom: 16px;
+    background-color: #e9e9f0;
+}
+
+.file__input {
+    margin-bottom: 16px;
+}
+
+#add__clothing {
+    margin-top: 10px;
+    color: white;
+    background-color: #464443;
+    border-radius: 0;
+    width: 120px;
+}

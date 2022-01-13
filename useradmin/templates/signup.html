@@ -1,12 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup_style.css' %}">
+{% endblock %}
 
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-    <h2>Sign up</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign up</button>
-    </form>
+    <div class="signup__background"></div>
+    <div class="form__wrapper">
+        <h2>Sign up</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="{{ form.username.auto_id }}" class="label__input">{{ form.username.label }}</label><br>
+                {{ form.username }}<br>
+
+            <label for="{{ form.first_name.auto_id }}" class="label__input">{{ form.first_name.label }}</label><br>
+                {{ form.first_name }}<br>
+            
+            <label for="{{ form.last_name.auto_id }}" class="label__input">{{ form.last_name.label }}</label><br>
+                {{ form.last_name }}<br>
+
+            <label for="{{ form.email.auto_id }}" class="label__input">{{ form.email.label }}</label><br>
+                {{ form.email }}<br>
+            <div class="upload__picture">
+                <label for="{{ form.profile_picture.auto_id }}" class="label__input">{{ form.profile_picture.label }}</label><br>
+                    {{ form.profile_picture }}<br>
+            </div>
+
+            <label for="{{ form.password1.auto_id }}" class="label__input">{{ form.password1.label }}</label><br>
+                {{ form.password1 }}<br>
+            
+            <label for="{{ form.password2.auto_id }}" class="label__input">{{ form.password2.label }}</label><br>
+                {{ form.password2 }}<br>
+            {{form.errors}}
+            <button type="submit" id="signup__btn">Sign up</button>
+        </form>
+    </div>
 {% endblock %}

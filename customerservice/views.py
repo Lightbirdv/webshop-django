@@ -6,7 +6,7 @@ from modelclothing.models import Comment, Clothing
 @staff_member_required(login_url='/useradmin/login/')
 def clothing_create(request):
     if request.method == 'POST':
-        create_clothing_form = ClothingForm(request.POST)
+        create_clothing_form = ClothingForm(request.POST, request.FILES)
         create_clothing_form.instance.myuser = request.user
         if create_clothing_form.is_valid():
             create_clothing_form.save()

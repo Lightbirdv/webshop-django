@@ -9,6 +9,7 @@
 
 {% block sidenav %}
     <div class="sidenav">
+        <a href="{% url 'clothing-list' %}">All</a>
         <a href="{% url 'clothing-filter' 'Jackets' %}">Jackets</a>
         <a href="{% url 'clothing-filter' 'T-Shirts' %}">T-Shirts</a>
         <a href="{% url 'clothing-filter' 'Shirts' %}">Shirts</a>
@@ -31,7 +32,11 @@
         {% if all_the_clothes %}
             {% for clothing in all_the_clothes %}
                 <div class="list-item">
-                    <img src="{% static 'img/product-default.jpg' %}" style="width:150px; height:150px;">
+                    {% if clothing.product_picture %}
+                        <img src="{{ clothing.product_picture.url }}" style="width:200px; height:300px;">
+                    {% else %}
+                        <img src="{% static 'img/product-default.jpg' %}" style="width:200px; height:300px;">
+                    {% endif %}
                     <a href="{{ clothing.id }}/" class="clothing-title"><b>{{ clothing.name }}</b></a>
                     <br><p>{{ clothing.price }}€</p>
                 </div>
