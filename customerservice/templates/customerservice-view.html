@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/service_style.css' %}">
+{% endblock %}
+
+{% block title %}Customerservice{% endblock %}
+
+{% block content %}
+    <div class="page__wrapper">
+        <h2>Customerservice Hub</h2><br>
+        <a href="{% url 'clothing-create' %}" class="service__links">Create a new Clothing entry</a><br>
+        <a href="{% url 'comments-reported-show' %}" class="service__links">Show reported comments</a><br>
+        <a href="{% url 'myuser-list' %}" class="service__links">Show User-list</a><br>
+    </div>
+{% endblock %}

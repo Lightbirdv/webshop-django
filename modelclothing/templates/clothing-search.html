@@ -1,26 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/list_style.css' %}">
+{% endblock %}
+
 {% block title %}Search clothing{% endblock %}
 
 {% block content %}
-<h2>Search clothing</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Search</button>
-    </form>
-    <br>
-    <br>
-
-    {% if show_results %}
-        <b>Clothes found:</b><br>
-        <ul>
-        {% for clothing in findings %}
-            <a href="{% url 'clothing-detail' clothing.id %}"><b>{{ clothing.name }}</b></a><br>
-            {{ clothing.clothing_details }}<br>
+    <div class="list-container">
+        <h2>Search clothing</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="{{ form.name.auto_id }}" class="label__input">{{ form.name.label }}</label><br>
+                    {{ form.name }}<br>
+                <label for="{{ form.description.auto_id }}" class="label__input">{{ form.description.label }}</label><br>
+                    {{ form.description }}<br>
+                <button type="submit">Search</button>
+            </form>
             <br>
-        {% endfor %}
-        </ul>
-    {% endif %}
+            <br>
+
+            {% if show_results %}
+                <b>Clothes found:</b><br>
+                <ul>
+                {% for clothing in findings %}
+                    <div class="list-item">
+                        {% if clothing.product_picture %}
+                            <img src="{{ clothing.product_picture.url }}" style="width:200px; height:300px;">
+                        {% else %}
+                            <img src="{% static 'img/product-default.jpg' %}" style="width:200px; height:300px;">
+                        {% endif %}
+                        <a href="{% url 'clothing-detail' clothing.id %}" class="clothing-title"><b>{{ clothing.name }}</b></a>
+                        <br><p>{{ clothing.price }}€</p>
+                    </div>
+                {% endfor %}
+                </ul>
+            {% endif %}
+    </div>
 {% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detail_style.css' %}">
+{% endblock %}
+
+{% block title %}Edit Comment{% endblock %}
+
+{% block content %}
+<div class="content__wrapper">
+    <h2>Edit Comment</h2>
+
+        <form method="POST" action="{% url 'comment-update' comment.id %}">
+            {% csrf_token %}
+            <div class="rating">
+                <input id="star5" name="rating" type="radio" value="5" class="radio-btn hide" />
+                <label for="star5">☆</label>
+                <input id="star4" name="rating" type="radio" value="4" class="radio-btn hide" />
+                <label for="star4">☆</label>
+                <input id="star3" name="rating" type="radio" value="3" class="radio-btn hide" />
+                <label for="star3">☆</label>
+                <input id="star2" name="rating" type="radio" value="2" class="radio-btn hide" />
+                <label for="star2">☆</label>
+                <input id="star1" name="rating" type="radio" value="1" class="radio-btn hide" />
+                <label for="star1">☆</label>
+                <div class="clear"></div>
+            </div>
+            <textarea id="text" name="text" rows="4" cols="50"></textarea>
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+            <br>
+            <button type="submit" id="comment__btn">Save comment</button>
+        </form>
+    </div>
+{% endblock %}

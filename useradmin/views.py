@@ -25,12 +25,7 @@ class MyLoginView(LoginView):
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
         return HttpResponseRedirect(self.get_success_url())
-
-class MyUserListView(generic.ListView):
-    model = MyUser
-    context_object_name = 'all_myusers'
-    template_name = 'myuser-list.html'
-
+        
 
 def logout_view(request):
     auth_logout(request)
@@ -40,3 +35,30 @@ def profile_view(request):
     user = MyUser.objects.get(id=request.user.id)
     context = {'that_user': user}
     return render(request, 'profile.html', context)
+
+def user_update(request, userid):
+    if not request.user.is_requestuser_or_staff(userid):
+        return redirect('profile')
+
+    user = MyUser.objects.get(id=userid)
+    form = MySignUpForm(instance=user)
+    print(request.POST)
+    print(request.FILES)
+    if request.method == 'POST':
+        if request.POST['username']:
+            user.username = request.POST['username']
+        if request.POST['first_name']:
+            user.first_name = request.POST['first_name']
+        if request.POST['last_name']:
+            user.last_name = request.POST['last_name']
+        if request.POST['email']:
+            user.email = request.POST['email']
+        if request.FILES['profile_picture']:
+            user.profile_picture = request.FILES['profile_picture']
+        print(user)
+        user.save()
+
+        return redirect('profile')
+
+    context = {'form': form}
+    return render(request, 'myuser-edit.html', context) 

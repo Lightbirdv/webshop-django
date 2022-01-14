@@ -6,9 +6,8 @@ class ClothingForm(forms.ModelForm):
 
     class Meta:
         model = Clothing
-        fields = ['name', 'description', 'color', 'collection', 'size', 'type', 'sex','pdffile', 'product_picture', 'price']
+        fields = ['name', 'description', 'color', 'collection', 'type', 'sex','pdffile', 'product_picture', 'price']
         widgets = {
-            'size': forms.Select(choices=Clothing.SIZE, attrs={'class': 'choice__input'}),
             'type': forms.Select(choices=Clothing.TYPE, attrs={'class': 'choice__input'}),
             'sex': forms.Select(choices=Clothing.SEX, attrs={'class': 'choice__input'}),
             'myuser': forms.HiddenInput(),
@@ -32,6 +31,11 @@ class CommentForm(forms.ModelForm):
         
 class SearchForm(forms.ModelForm):
 
+    description = forms.CharField(required=False, widget=forms.TextInput(attrs={'class':'txt__input', 'placeholder':'description'}),)
+
     class Meta:
         model = Clothing
         fields = ['name','description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'txt__input', 'placeholder':'name'}),
+        }

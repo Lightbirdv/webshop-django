@@ -2,6 +2,28 @@ from django.shortcuts import render, redirect
 from modelclothing.forms import ClothingForm
 from django.contrib.admin.views.decorators import staff_member_required
 from modelclothing.models import Comment, Clothing
+from django.views import generic
+from useradmin.models import MyUser
+
+
+@staff_member_required(login_url='/useradmin/login/')
+def customerservice_view(request):
+    return render(request,'customerservice-view.html')
+
+
+@staff_member_required(login_url='/useradmin/login/')
+def show_myusers(request):
+    myusers = MyUser.objects.all()
+    context = {'myuser_list': myusers}
+    return render(request, 'myuser-list.html', context)
+
+
+@staff_member_required(login_url='/useradmin/login/')
+def delete_myusers(request, userid):
+    user = MyUser.objects.filter(id=userid)
+    user.delete()
+    return redirect('myuser-list')
+
 
 @staff_member_required(login_url='/useradmin/login/')
 def clothing_create(request):
@@ -51,5 +73,3 @@ def delete_reported_comments(request, pk):
     comment = Comment.objects.filter(id=pk)
     comment.delete()
     return redirect('comments-reported-show')
-
-    

@@ -1,36 +1,46 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile_style.css' %}">
+{% endblock %}
+
 {% block title %}Profile{% endblock %}
 
 {% block content %}
 <h2>My Profile</h2>
 
+    {% if that_user.profile_picture %}
+        <img src="{{that_user.profile_picture.url}}" width="200" height="200" class="profile__pic"><br>
+    {% else %}
+        <img src="{% static 'img/profile-default.svg' %}" width="200" height="200" class="profile__pic"><br>
+    {% endif %}
     <table>
     <tr>
-        {% if that_user.profile_picture.url %}
-            <td><img src="{{that_user.profile_picture.url}}"><br></td>
-    </tr>
-    <tr>
         <td><b>Username:</b></td>
-        <td>{{ that_user.username }}<br></td>
+        <td><p>{{ that_user.username }}</p></td>
     </tr>
     <tr>
         <td><b>First Name:</b></td>
-        <td>{{ that_user.first_name }}<br></td>
+        <td><p>{{ that_user.first_name }}</p></td>
     </tr>
     <tr>
         <td><b>Last Name:</b></td>
-        <td>{{ that_user.last_name }}<br></td>
+        <td><p>{{ that_user.last_name }}</p></td>
     </tr>
     <tr>
         <td><b>Email:</b></td>
-        <td>{{ that_user.email }}<br></td>
+        <td><p>{{ that_user.email }}</p></td>
     </tr>
     <tr>
         <td><b>Date joined:</b></td>
-        <td>{{ that_user.date_joined }}<br></td>
+        <td><p>{{ that_user.date_joined }}</p></td>
+    </tr>
+    <tr>
+        <td><b>type:</b></td>
+        <td><p>{{ that_user.type }}</p></td>
     </tr>
     </table>
+    <a href="{% url 'user-update' that_user.id %}" id="edit__link"> Edit my Information </a>
 
 {% endblock %}

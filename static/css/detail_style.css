@@ -78,12 +78,17 @@ td {
     margin-bottom: 20px;
 }
 
+#usefulness__scale {
+    color:#c7c3c0;
+    font-size: 12px;
+}
+
 #reported__link {
     color:#c7c3c0;
     font-size: 12px;
 }
 
-#report__link {
+.comment__link {
     color:#c7c3c0;
     font-size: 12px;
     text-decoration: underline;

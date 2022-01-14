@@ -45,15 +45,19 @@ def add_shopping_cart(request, **kwargs):
     the_clothing_to_add = Clothing.objects.get(id=clothing_id)
     if request.method == 'POST':
         myuser = request.user
-        Cart.add_item(myuser, the_clothing_to_add)
+        Cart.add_item(myuser, the_clothing_to_add, request.POST['size'])
     comments = Comment.objects.filter(clothing=the_clothing_to_add)
     context = {'that_clothing': the_clothing_to_add,
                'comments_for_that_clothing': comments,
-               'upvotes': the_clothing_to_add.get_upvotes_count(),
-               'downvotes': the_clothing_to_add.get_downvotes_count(),
                'comment_form': CommentForm}
     return render(request, 'clothing-detail.html', context)
 
+
+def remove_shopping_cart(request, **kwargs):
+    item_id = kwargs['pk']
+    item = CartItem.objects.get(id=item_id)
+    item.delete()
+    return redirect('shopping-cart-show')
 
 
 @login_required(login_url='/useradmin/login/')

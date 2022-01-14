@@ -54,9 +54,16 @@ class MyUser(AbstractUser):
 
         return count
 
-    
+
     def is_superuser_or_customer_service(self):
         if self.type == 'SU' or self.type == 'CS':
+            return True
+        else:
+            return False
+
+
+    def is_requestuser_or_staff(self, userid):
+        if self.id == userid or self.type == 'SU' or self.type == 'CS':
             return True
         else:
             return False

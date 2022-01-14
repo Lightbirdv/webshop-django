@@ -17,23 +17,19 @@
 {% endblock %}
 {% block content %}
     <div class='trending__card'>
-        <h1 id='trending__heading'>Trending Clothes</h1>
-        <div class='trending__item'>
-            <img src="{% static 'img/trending_placeholder.svg' %}" style="width:30%; float:left;">
-            <div class='trending__txt'>
-                <h2>Title</h2>
-                <p>orem ipsum dolor sit amet, adipiscing elit. Nunc dolor nulla</p>
-                <p>15,99 €</p>
-            </div>
-        </div>
-        <div class='trending__item'>
-            <img src="{% static 'img/trending_placeholder.svg' %}"style="width:30%; float:left;">
-            <div class='trending__txt'>
-                <h2>Title</h2>
-                <p>orem ipsum dolor sit amet, adipiscing elit. Nunc dolor nulla</p>
-                <p>15,99 €</p>
-            </div>
-        </div>
+        <h1 id='trending__heading'>New Ins</h1>
+        {% if trending_clothing %}
+            {% for clothing in trending_clothing %}
+                <div class='trending__item'>
+                    <img src="{{ clothing.product_picture.url }}" style="width:200px; height:200px; float:left; object-fit:cover;">
+                    <div class='trending__txt'>
+                        <h2>{{ clothing.name }}</h2>
+                        <p>{{ clothing.description }}</p>
+                        <p>{{ clothing.price }} €</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
     <div class='company__section'>
         <div class="column">
@@ -57,13 +53,13 @@
     <div class='sex__selection'>
         <div class='sex__card'>
             <h2>Womans Clothing Catalog</h2>
-            <p>orem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dolor nulla, </p>
-            <a>View Catalog -></a>
+            <p>We have the latest and most complete catalog of clothes for women</p>
+            <a href="{% url 'clothing-list-women' %}">View Catalog -></a>
         </div>
         <div class='sex__card'>
             <h2>Mans Clothing Catalog</h2>
-            <p>orem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dolor nulla, </p>
-            <a>View Catalog -></a>
+            <p>We have the latest and most complete catalog of clothes for men</p>
+            <a href="{% url 'clothing-list-men' %}">View Catalog -></a>
         </div>
     </div>
     <div class="clearfix"></div>

@@ -57,9 +57,10 @@ h1, h2, h3, p, a {
 }
 
 .trending__txt {
-    width: 70%;
+    width: 60%;
     float: right;
-    padding: 10px; 
+    margin-left: 10px; 
+    margin-top: 10px;
 }
 
 .trending__txt p {

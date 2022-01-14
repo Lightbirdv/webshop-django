@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/userlist_style.css' %}">
+{% endblock %}
+
+{% block title %}Users list{% endblock %}
+
+{% block content %}
+<h2>Users list</h2>
+<ul>
+    {% for myuser in myuser_list %}
+        <div class="list-item">
+            {% if myuser.profile_picture %}
+                <img src="{{ myuser.profile_picture.url }}" height="150" width="150">
+            {% else %}
+                <img src="{% static 'img/profile-default.svg' %}" height="150" width="150">
+            {% endif %}
+            <b>{{ myuser.username }}</b>
+            <p>{{ myuser.first_name }} {{ myuser.last_name }}</p>
+            <p>joined: {{ myuser.date_joined }}</p>
+            <p>type: {{ myuser.type }}</p><br>
+            <a href="{% url 'myuser-delete' myuser.id %}">delete</a>
+            <a href="{% url 'user-update' myuser.id %}"> edit</a>
+        </div>
+    {% endfor %}
+{% endblock %}

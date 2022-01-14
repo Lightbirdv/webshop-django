@@ -1,28 +1,52 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cart_style.css' %}">
+{% endblock %}
+
 {% block title %}Shopping cart{% endblock %}
 
 {% block content %}
 <h2>Shopping cart</h2>
-    {% if shopping_cart_is_empty %}
-        Your shopping cart is empty.<br>
-    {% else %}
-        {% for item in shopping_cart_items %}
-            {{ item.product_name }}<br>
-            {{ item.price }} € x{{ item.quantity }}<br>
-            <br>
-        {% endfor %}
+    <div class="shoppingcart__content">
+        {% if shopping_cart_is_empty %}
+            <p>Your shopping cart is empty.</p><br>
+        {% else %}
+            <div class="shoppingcart__list">
+                {% for item in shopping_cart_items %}
+                    <div class="shoppingcart__item">
+                        <img src="{{item.product_picture}}" width="130" height="180">
+                        <div class="shoppingcart__txt">
+                            <p id="collection__item">{{ item.product_collection }}</p>
+                            <b>{{ item.product_name }}</b><br>
+                            <b>{{ item.price }} €</b> 
+                            <p> color: {{ item.product_color }}</p>
+                            <p> Size: {{ item.size }} Quantity: {{ item.quantity }}</p>
+                            <a href="{% url 'shopping-cart-remove' item.id %}"><button id="delete__btn">Delete</button></a>
+                        </div>
+                        <br>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="pay__form">
+                <b>Summary</b>
+                <hr>
+                <p>Subtotal: {{ total }}€</p>
+                <p>Shipping: 0 €</p>
+                <hr>
+                <p>Total amount: {{ total }} €</p>
 
-        Total amount: {{ total }} €
-
-        <br><br>
-        <form method="POST">
-            {% csrf_token %}
-            <button type="submit" name="empty">Empty the shopping cart</button><br>
-            <button type="submit" name="pay">Pay with credit card</button>
-        </form>
-    {% endif %}
+                <br><br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="empty" id="empty__btn">Empty the shopping cart</button><br>
+                        <button type="submit" name="pay" id="pay__btn">Pay with credit card</button>
+                    </form>
+            </div>
+        {% endif %}
+    </div>
 
     <br>
     <a href="{% url 'clothing-list' %}">Keep shopping the clothes</a>

@@ -1,0 +1,36 @@
+.list-item {
+    position: relative;
+    width:250px;
+    float: left;
+    padding: 20px;
+    margin: 20px;
+  }
+
+  .list-item img {
+    display: block;
+    margin-left: 0;
+    margin-right: auto;
+    padding-top: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+  }
+
+  .list-item b {
+    font-family: Poppins;
+    padding: 5px;
+  }
+
+  .list-item p {
+    padding-left: 5px;
+  }
+
+  .list-item a {
+    padding-left: 5px;
+    text-decoration: underline;
+    color:#c7c3c0;
+    font-size: 12px;
+  }
+
+  .clear {
+    clear: both;
+  }

@@ -1,0 +1,19 @@
+b, p {
+    font-family: Poppins;
+    font-size: 18px;
+}
+
+table, .profile__pic {
+    margin-top: 30px;
+    margin-left: 85px;
+}
+
+td {
+    padding: 10px 0;
+}
+
+#edit__link {
+    margin-left: 85px;
+    margin-top: 80px;
+    text-decoration: underline;
+}

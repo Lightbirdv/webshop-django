@@ -17,7 +17,10 @@
                 <li><a href="{% url 'clothing-list' %}">Shop</a></li>
                 <li><a href="{% url 'clothing-list-women' %}">Woman</a></li>
                 <li><a href="{% url 'clothing-list-men' %}">Man</a></li>
-                <li><a href="#">Help</a></li>
+                <li><a href="{% url 'clothing-search' %}">Search</a></li>
+                {% if user.is_superuser_or_customer_service %}
+                <li><a href="{% url 'customerservice-view' %}">Service</a></li>
+                {% endif %}
             </ul>
         </div>
         <a href="{% url 'shopping-cart-show' %}"><img id="cart__header" src="{% static 'img/cart.svg' %}" alt="cart">

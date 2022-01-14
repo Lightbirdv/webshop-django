@@ -8,14 +8,6 @@ from django.conf import settings
 
 # Create your models here.
 class Clothing(models.Model):
-    SIZE = [
-        ('XS', 'xs'),
-        ('S', 's'),
-        ('M', 'm'),
-        ('L', 'l'),
-        ('XL', 'xl'),
-        ('XXL', 'xxl')
-    ]
 
     TYPE = [
         ('Jackets','jackets'),
@@ -46,9 +38,6 @@ class Clothing(models.Model):
     collection = models.CharField(max_length=50)
     timestamp = models.DateTimeField(default=datetime.now, blank=True)
     product_picture = models.ImageField(upload_to='product_pictures/', blank=True)
-    size = models.CharField(max_length=3,
-                            choices=SIZE,
-                            )
 
     type = models.CharField(max_length=12,
                             choices=TYPE,
@@ -79,17 +68,23 @@ class Clothing(models.Model):
         rating = round(rating,1)
         return str(rating)
 
+    def already_commented(self, userid):
+        comments = Comment.objects.filter(id=self.id)
+        for comment in comments:
+            if comment.myuser_id == userid:
+                return True
+        return False
 
     def __str__(self):
         return self.name + ' (' + self.collection + ')'
 
 
     def __repr__(self):
-        return self.name + ' / ' + self.description + ' / ' + self.color + ' / ' + self.collection + ' / ' + self.size + ' / ' + self.type
+        return self.name + ' / ' + self.description + ' / ' + self.color + ' / ' + self.collection + ' / ' + self.type
 
 
     def clothing_details(self):
-        return self.name + ' / ' + self.description + ' / ' + self.color + ' / ' + self.collection + ' / ' + self.size + ' / ' + self.type
+        return self.name + ' / ' + self.description + ' / ' + self.color + ' / ' + self.collection + ' / ' + self.type
 
 class Comment(models.Model):
     text = models.TextField(max_length=500, blank=True)
@@ -98,7 +93,7 @@ class Comment(models.Model):
     myuser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     clothing = models.ForeignKey(Clothing, on_delete=models.CASCADE)
     reported = models.BooleanField(default=False)
-
+    usefulness = models.IntegerField(default='0')
 
     class Meta:
         ordering = ['timestamp']
@@ -112,6 +107,14 @@ class Comment(models.Model):
         else:
             return self.text
 
+    def is_reported(self):
+        if self.reported == True:
+            return True
+        else:
+            return False
+
+    def increment_usefulness(self):
+        self.usefulness = self.usefulness + 1 
 
     def __str__(self):
         return self.get_comment_prefix() + ' (' + self.myuser.username + ')'
@@ -119,10 +122,3 @@ class Comment(models.Model):
 
     def __repr__(self):
         return self.get_comment_prefix() + ' (' + self.myuser.username + ' / ' + str(self.timestamp) + ')'
-
-
-    def is_reported(self):
-        if self.reported == True:
-            return True
-        else:
-            return False

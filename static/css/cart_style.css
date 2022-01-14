@@ -1,0 +1,59 @@
+.shoppingcart__content {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.shoppingcart__list {
+    display: block;
+}
+
+.shoppingcart__item {
+    display:flex;
+    margin-left: 170px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.shoppingcart__item b {
+    font-family: Poppins;
+}
+
+#collection__item {
+    color:#999693;
+    font-size: 12px;
+}
+
+.shoppingcart__item img {
+    margin-right: 40px;
+    object-fit: cover;
+}
+
+.pay__form {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 80px;
+    height: 400px;
+    margin-top: 40px;
+    margin-right: 170px;
+}
+
+.pay__form b {
+    font-family: Poppins;
+}
+
+#delete__btn {
+    margin-top: 10px;
+}
+
+#empty__btn {
+    width: 100%;
+    background-color: #e7e5e4;
+}
+
+#pay__btn {
+    margin-top: 10px;
+    width: 100%;
+    background-color: #464443;
+    color: white;
+}
