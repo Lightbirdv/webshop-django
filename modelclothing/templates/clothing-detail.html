@@ -35,8 +35,11 @@
             <td><b>Rating:</b></td>
             <td>★{{ that_clothing.get_rating }}<br></td>
         </tr>
+        <tr>
+            <td><b>Product File:</b></td>
+            <td><a href="{{ that_clothing.pdffile.url }}" id="product__link">click me</a><br></td>
+        </tr>
         </table>
-
         <div class="cta__cart">
             {% if user.is_authenticated %}
                 <br>

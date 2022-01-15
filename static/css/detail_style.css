@@ -97,3 +97,8 @@ td {
 .clear {
     clear:left;
 }
+
+#product__link {
+    color:#c7c3c0;
+    text-decoration: underline;
+}
