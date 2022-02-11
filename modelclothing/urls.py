@@ -7,8 +7,8 @@ urlpatterns = [
     path('show/women/', views.clothing_list_women, name='clothing-list-women'),
 
     path('show/<int:pk>/', views.clothing_detail, name='clothing-detail'),
-    path('show/women/<int:pk>/', views.clothing_detail, name='clothing-detail'),
-    path('show/men/<int:pk>/', views.clothing_detail, name='clothing-detail'),
+    path('show/women/<int:pk>/', views.clothing_detail, name='clothing-detail-women'),
+    path('show/men/<int:pk>/', views.clothing_detail, name='clothing-detail-men'),
 
     path('show/filter/<str:filter>/', views.filtered_clothing_list, name='clothing-filter'),
     path('show/men/filter/<str:filter>/', views.filtered_clothing_list_men, name='clothing-filter-men'),

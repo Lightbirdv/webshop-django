@@ -23,7 +23,7 @@
                 <div class='trending__item'>
                     <img src="{{ clothing.product_picture.url }}" style="width:200px; height:200px; float:left; object-fit:cover;">
                     <div class='trending__txt'>
-                        <h2>{{ clothing.name }}</h2>
+                        <a href="{% url 'clothing-detail' clothing.id %}"><h2>{{ clothing.name }}</h2><a>
                         <p>{{ clothing.description }}</p>
                         <p>{{ clothing.price }} €</p>
                     </div>

@@ -37,7 +37,7 @@ def filtered_clothing_list_men(request, filter):
     filtered_clothes = all_clothes.filter(type=filter)
     print(filtered_clothes)
     context = {'all_the_clothes': filtered_clothes}
-    return render(request, 'clothing-list.html', context)
+    return render(request, 'clothing-list-men.html', context)
 
 
 def filtered_clothing_list_women(request, filter):
@@ -45,7 +45,7 @@ def filtered_clothing_list_women(request, filter):
     filtered_clothes = all_clothes.filter(type=filter)
     print(filtered_clothes)
     context = {'all_the_clothes': filtered_clothes}
-    return render(request, 'clothing-list.html', context)
+    return render(request, 'clothing-list-woman.html', context)
 
 
 def clothing_detail(request, **kwargs):
